@@ -2,7 +2,6 @@
   "name": "gdpr-extensions-com/gdpr-extensions-com-tiktok",
   "type": "typo3-cms-extension",
   "description": "A TYPO3 extension for TikTok integration with GDPR compliance.",
-  "version": "1.0.4",
   "authors": [],
   "license": "GPL-2.0-or-later",
   "require": {
