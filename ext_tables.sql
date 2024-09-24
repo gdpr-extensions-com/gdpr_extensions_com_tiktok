@@ -7,6 +7,7 @@ CREATE TABLE tx_gdprextensionscomyoutube_domain_model_gdprmanager (
 	background_image_color varchar(255) NOT NULL DEFAULT '',
 	button_color varchar(255) NOT NULL DEFAULT '',
 	button_text_color varchar(255) NOT NULL DEFAULT '',
+	heading_color varchar(255) NOT NULL DEFAULT '',
 	text_color varchar(255) NOT NULL DEFAULT '',
 	button_shape varchar(255) NOT NULL DEFAULT '',
 	extension_title varchar(255) NOT NULL DEFAULT '',

@@ -433,6 +433,7 @@
                     buttonTextColor: solSetting.buttonTextColor,
                     btnText: solSetting.buttonText,
                     btnShape: solSetting.buttonShape,
+                    headingColor: solSetting.headingColor,
                 },
                 {
                     type: 'map',
@@ -446,6 +447,7 @@
                     buttonTextColor: solSetting.buttonTextColor,
                     btnText: solSetting.buttonText,
                     btnShape: solSetting.buttonShape,
+                    headingColor: solSetting.headingColor,
                 },
                 {
                     type: 'calendar',
@@ -484,13 +486,13 @@
 
             // Create div-element within the respective iframe to display the defined data-security message and get consent for loading the iframe content.
 
-            function wrap(el, wrapper, type, text, heading, btnColor, textColor, imagePath, imageStatus, bgColor, buttonTextColor, btnText, btnShape) {
+            function wrap(el, wrapper, type, text, heading, btnColor, textColor, imagePath, imageStatus, bgColor, buttonTextColor, btnText, btnShape, headingColor) {
                 el.parentNode.insertBefore(wrapper, el);
                 wrapper.className = 'privacy-msg privacy-' + type + '-msg';
                 wrapper.style.width = el.clientWidth + 'px';
                 wrapper.style.height = el.clientHeight + 'px';
                 wrapper.innerHTML = imageStatus == 1 ? "<div class='bgComtainer-image'><img class='bg-image' src='" + imagePath + "'/><div class='overlay'></div>" : "";
-                wrapper.innerHTML += '<h2 style="color:' + textColor + '">' + heading + '</h2>';
+                wrapper.innerHTML += '<h2 style="color:' + headingColor + '">' + heading + '</h2>';
                 wrapper.innerHTML += '<p class="description" style="color:' + textColor + '">' + text + '</p>' + '<a href="#foo" class="link-action ' + btnShape + '" style="background-color: ' + btnColor + ';color:' + buttonTextColor + '" onclick="_2ClickIframePrivacy.EnableContent(\'' + type + '\'); return false;">' + btnText + '</a>';
                 if (config.enableCookies) {
                     wrapper.innerHTML = wrapper.innerHTML + '<label class="checkbox-label"  style="color:' + textColor + ';display: none"><input type="checkbox" checked style="border-color: ' + btnColor + '" name="remind-\'' + type + '\'" /> ' + config.rememberChoiceLabel + '</label>';
@@ -770,6 +772,7 @@
                                 solSetting[service].buttonTextColor,
                                 solSetting[service].buttonText,
                                 solSetting[service].buttonShape,
+                                solSetting[service].headingColor,
                             );
                         } else {
                             if(service === 'tiktok'){
@@ -842,6 +845,7 @@
                                         settings[service].buttonTextColor,
                                         settings[service].buttonText,
                                         settings[service].buttonShape,
+                                        settings[service].headingColor,                                        
                                     );
                                 } else {
                                     selector[x].src = selector[x].getAttribute("data-src");

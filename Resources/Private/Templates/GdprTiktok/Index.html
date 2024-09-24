@@ -26,7 +26,7 @@
             max-height: 600px;
         }
 
-        #gdpr-extensions-com-cookie-container div.privacy-msg {
+        #gdpr-extensions-com-cookie-container div.gdpr-privacy-msg {
             max-width: 1020px;
             padding: 18px;
             width: 100% !important;
@@ -36,10 +36,10 @@
             margin: 30px;
         }
 
-        #gdpr-extensions-com-cookie-container div.privacy-msg .wraper {
+        #gdpr-extensions-com-cookie-container div.gdpr-privacy-msg .wraper {
             width: 100%;
             border-radius: 6px;
-            padding: 6% 85px;
+            padding: 6% 20px;
             text-align: center;
             -webkit-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
             -moz-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -308,14 +308,13 @@
                 <iframe id="go-tiktok-player-<f:format.raw>{TiktokData.uid}</f:format.raw>"
                         width="100%" height="100%" src=""
                         data-src="<f:format.raw>{TiktokData.gdpr_tiktok_url}</f:format.raw>"
-                        data-2click-service="gdpr_extensions_com_tiktok" data-2click-type="video">
+                        data-2click-service="gdpr_extensions_com_tiktok" data-2click-type="video" style="display: none;">
 
                 </iframe>
             </div>
         </div>
 
         <f:asset.script identifier="2ClickSol">
-
 
             /*
 
@@ -324,14 +323,14 @@
             It internally uses cookies to remember user choices about privacy settings.
 
             Classes:
-            - privacy-msg: Used to style privacy message displayed within iframe
+            - gdpr-privacy-msg: Used to style privacy message displayed within iframe
             - toggleButton : Used by buttons which enables/disables specific services
 
             Methods:
             - setConsentStatus(service,status) : Sets the consent status for a service and stores it as a cookie.
             - deleteCookie(name) : Deletes the specified cookie.
             - getConsentStatuses(): Returns a JSON object representing all the cookies whose consent was obtained.
-            - wrap(el, wrapper, type, text, heading): Adds 'privacy-msg' div element inside an iframe containing info about data security and obtain user’s consent
+            - wrap(el, wrapper, type, text, heading): Adds 'gdpr-privacy-msg' div element inside an iframe containing info about data security and obtain user’s consent
             - EnableContent(type): Enables the iframe content once user provides consent.
             - DisableContent(type,e): Disables the iframe content if user withdraws consent.
             - Init(UserConfig) : Initializes the instance with user provided configurations.
@@ -578,7 +577,7 @@
 
             function wrap(el, wrapper, type, text, heading, btnColor, textColor, imagePath, imageStatus, bgColor, buttonTextColor, btnText, btnShape) {
             el.parentNode.insertBefore(wrapper, el);
-            wrapper.className = 'privacy-msg privacy-' + type + '-msg';
+            wrapper.className = 'gdpr-privacy-msg privacy-' + type + '-msg';
             wrapper.style.width = el.clientWidth + 'px';
             wrapper.style.height = el.clientHeight + 'px';
             wrapper.innerHTML = imageStatus == 1 ? "<div class='bgComtainer-image'><img class='bg-image' src='" + window.location.origin +"/"+ imagePath + "'/><div class='overlay'></div>" : "";
@@ -635,6 +634,8 @@
 
 
             let serviceType = x[i].getAttribute("data-2click-service");
+
+            x[i].style.display = 'block';
             if (serviceType === 'gdpr_extensions_com_gmap') {
             if (i == 0) {
             let parent = x[i];
@@ -651,6 +652,11 @@
             if (serviceType === 'gdpr_extensions_com_bmap') {
             gdpr_extensions_com_bmap_gdpr(x[i],'add');
             }
+
+            if (serviceType === 'gdpr_extensions_com_sfc') {
+            gdpr_extensions_com_sfc_gdpr(x[i],'add');
+            }
+
 
             x[i].src = x[i].getAttribute("data-src");
             }
@@ -697,9 +703,10 @@
             }
 
             var x = document.querySelectorAll('iframe[data-2click-service="' + type + '"]');
+
             for (i = 0; i < x.length; i++) {
             let dummy = x[i].innerHTML;
-
+            x[i].style.display = 'none';
 
             x[i].src = ''; // Disabling the iframe by setting src as empty
             if (type == 'gdpr_extensions_com_gmap') {
@@ -711,6 +718,12 @@
             }
             if (type == 'gdpr_extensions_com_bmap') {
             gdpr_extensions_com_bmap_gdpr(x[i],'remove');
+
+            }
+
+            if (type == 'gdpr_extensions_com_sfc') {
+
+            gdpr_extensions_com_sfc_gdpr(x[i],'remove');
 
             }
             }
@@ -861,6 +874,7 @@
             let service_root = service + '_<f:format.raw>{rootPid}</f:format.raw>';
             let check = solSetting[service];
 
+
             if (consentStatuses[service_root] !== '1') {
 
             wrap(selector[x], document.createElement('div'),
@@ -877,6 +891,12 @@
             solSetting[service].button_shape,
             );
             } else {
+
+
+            selector[x].src = selector[x].getAttribute("data-src");
+            gdprInner?.classList.remove('gdprInner');
+            selector[x].style.display = 'block';
+
             if (service === 'gdpr_extensions_com_gmap') {
             let parent = selector[x];
             let mapDiv = document.createElement('div');
@@ -888,9 +908,10 @@
             if (service === 'gdpr_extensions_com_bmap') {
             gdpr_extensions_com_bmap_gdpr(selector[x],'add');
             }
+            if (service === 'gdpr_extensions_com_sfc') {
 
-            selector[x].src = selector[x].getAttribute("data-src");
-            gdprInner?.classList.remove('gdprInner');
+            gdpr_extensions_com_sfc_gdpr(selector[x],'add');
+            }
             }
 
 
@@ -1179,6 +1200,56 @@
             bingMapScript.onerror = function (error) {
             console.error("Error loading Google Maps API:", error);
             };
+            }
+            }
+
+            function gdpr_extensions_com_sfc_gdpr(iframe, type) {
+
+
+            if (type != 'add' ) {
+            let SfcDiv = iframe.nextElementSibling;
+            while (SfcDiv.firstChild) {
+            SfcDiv.removeChild(SfcDiv.firstChild);
+            }
+            SfcDiv.style.display = 'none';
+
+            }else{
+            let parent = iframe;
+            let SfcDiv = iframe.nextElementSibling;
+            let SfcScript = atob(SfcDiv.getAttribute('data-2click-curator'));
+            let scriptContent = SfcScript.match(/<script[^>]*>([\w|\W]*)<\/script>/)[1];
+
+
+
+            parent.style.display = 'none';
+            SfcDiv.style.display = 'block';
+
+            // Create a new script element
+            let scriptElement = document.createElement("script");
+
+            // Set the new script's content
+            scriptElement.innerHTML = scriptContent;
+
+            // Append the new script element as a child of
+            SfcDiv.appendChild(scriptElement);
+
+            //SfcDiv.insertAdjacentHTML('beforeend', SfcScript);
+
+            // Get HTML content by replacing script tags and their contents with an empty string
+            let htmlContent = SfcScript.replace(/<script[^>]*>([\w|\W]*)<\/script>/g, '');
+
+            // Create a new div element for the HTML content
+            let htmlElement = document.createElement("div");
+
+            // Set the new div's inner HTML to the HTML content
+            htmlElement.innerHTML = htmlContent;
+
+            // Append the new div element as a child of
+            SfcDiv.appendChild(htmlElement);
+
+
+
+
             }
             }
 

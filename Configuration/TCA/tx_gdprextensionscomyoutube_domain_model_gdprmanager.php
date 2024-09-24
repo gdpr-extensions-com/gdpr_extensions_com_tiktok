@@ -20,7 +20,7 @@ return [
         'iconfile' => 'EXT:gdpr_extensions_com_tiktok/Resources/Public/Icons/tx_gdprextensionscomtiktok_domain_model_gdprmanager.gif'
     ],
     'types' => [
-        '1' => ['showitem' => 'heading, content, button_text, enable_background_image, background_image, map_api, background_image_color, button_color, text_color, button_text_color, button_shape, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language, sys_language_uid, l10n_parent, l10n_diffsource, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, hidden, starttime, endtime'],
+        '1' => ['showitem' => 'heading, content, button_text, enable_background_image, heading_color, background_image, map_api, background_image_color, button_color, text_color, button_text_color, button_shape, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language, sys_language_uid, l10n_parent, l10n_diffsource, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, hidden, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -117,6 +117,17 @@ return [
                 'eval' => 'trim',
                 'default' => ''
             ]
+        ],
+        'heading_color' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:gdpr_extensions_com_youtube/Resources/Private/Language/locallang_db.xlf:tx_gdprextensionscomyoutube_domain_model_gdprmanager.text_color',
+            'description' => 'LLL:EXT:gdpr_extensions_com_youtube/Resources/Private/Language/locallang_db.xlf:tx_gdprextensionscomyoutube_domain_model_gdprmanager.text_color.description',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim',
+                'default' => ''
+            ],
         ],
         'button_text' => [
             'exclude' => true,
