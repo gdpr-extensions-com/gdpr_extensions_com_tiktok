@@ -288,6 +288,10 @@
         max-height: 410px;
         overflow-y: auto;
     }
+    a.link-action-gdpr{
+        text-decoration: none;
+    }
+
 </style>
 {my:getTwoClickSolutions() -> f:variable(name: 'twoClickSol')}
 <f:variable name="decodedArray" value="{twoClickSol -> v:format.json.decode()}"/>
@@ -538,7 +542,7 @@
                     parent.removeChild(x[i]);
                 }
 
-                x = document.querySelectorAll('iframe[data-2click-service="' + type + '"]');
+                x = document.querySelectorAll('iframe[data-2click-service="' + type + '"],div[data-2click-service="' + type + '"]');
 
                 for (i = 0; i < x.length; i++) {
 
@@ -598,7 +602,7 @@
                     }
                 }
 
-                var x = document.querySelectorAll('iframe[data-2click-service="' + type + '"]');
+                var x = document.querySelectorAll('iframe[data-2click-service="' + type + '"],div[data-2click-service="' + type + '"]');
                 for (i = 0; i < x.length; i++) {
                     let dummy = x[i].innerHTML;
 
@@ -752,7 +756,7 @@
                     this.types = Userconfig.CustomTypes;
                 }
                 for (let i = 0; i < this.types.length; i++) {
-                    var selector = document.querySelectorAll('iframe[data-2click-type="' + this.types[i].type + '"]');
+                    var selector = document.querySelectorAll('iframe[data-2click-type="' + this.types[i].type + '"],div[data-2click-type="' + this.types[i].type + '"]');
 
                     for (let x = 0; x < selector.length; x++) {
 
@@ -828,7 +832,7 @@
 
                     for (let i = 0; i < e.length; i++) {
 
-                        var selector = document.querySelectorAll('iframe[data-2click-type="' + e[i].type + '"]');
+                        var selector = document.querySelectorAll('iframe[data-2click-type="' + e[i].type + '"],div[data-2click-type="' + e[i].type + '"]');
                         for (let x = 0; x < selector.length; x++) {
                             let service = selector[x].getAttribute('data-2click-service'); // get service name from iframe
                             if (service == key) {
